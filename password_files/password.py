@@ -91,7 +91,56 @@ class passwords:
 
     # For inserting new password you need the following kind of list:
     # password = [['Instagram', 'qwerty12345'], ['Twitter', 'abcdef123456']]
-    def write_passwords(*passwords):
+
+    # Or, if you want to download file or string with passwords, you can upload file with passwords to this repository usign this format:
+    # --------------------------------
+    # Website_1 a9843hgp938gh83389h
+    # Website_2 4ru93g8vh984hg09385gh08h038hg
+    # Website_3 r8934hv981hg8391gh380gh038
+    # Webiste_4 328ry3479gh493hg3h48gh80gh043
+    # Webiste_5 ir3209ru40fu498gh498hg938hg3804h0
+
+    # Type of input_data:
+    # file - from file
+
+    # string - from string
+    # If your data is ended, then type 0 to end process
+
+    def format_data(choice):
+        database = []
+
+        if choice.lower() == 'file':
+            file_name = input("Input directory to file: ")
+            try:
+                file_open = open(file_name, 'r')
+
+                data = [elem.replace('\n', '').split(' ') for elem in file_open.readlines()]
+                
+                for line in data:
+                    database.append([line[0], line[1]])
+
+                file_open.close()
+            
+            except FileNotFoundError:
+                print("Wrong input of file directory")
+                passwords.format_data(choice)
+
+
+        elif choice.lower() == 'string':
+            while True:
+                string = input()
+                if string == '0':
+                    break
+                
+                string = string.split(' ')
+                database.append([string[0], string[1]])
+
+
+        passwords.write_passwords(database)
+
+
+
+    def write_passwords(passwords):
         global columns
 
         password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
@@ -104,4 +153,3 @@ class passwords:
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
         password_data.to_csv("password_files/password_database.csv")
-
