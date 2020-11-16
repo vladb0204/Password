@@ -5,11 +5,6 @@ import string
 
 columns = ['WEBSITE', 'PASSWORD']
 
-# The example of password database:
-# data = {
-#     'JETBRAINS': {'WEBSITE': 'Jetbrains', 'PASSWORD': 'abcdefg1234567'}
-# }
-
 class password:
 
 
@@ -29,7 +24,7 @@ class password:
         global columns
 
         password_text = password.create_password(length)
-        password_database = pandas.read_csv(r'path\to\file', index_col=0).T
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
         data_dict = password_database.to_dict()
 
         data_dict[self.website.upper()] = dict()
@@ -38,14 +33,14 @@ class password:
         data_dict[self.website.upper()]['PASSWORD'] = password_text
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv(r'path\to\file')
+        password_data.to_csv("password_files/password_database.csv")
 
 
     # If the password is already existing and you don't have it in the database
     def write_password(self, password_text):
         global columns
 
-        password_database = pandas.read_csv(r'path\to\file', index_col=0).T
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
         data_dict = password_database.to_dict()
 
         data_dict[self.website.upper()] = dict()
@@ -54,7 +49,7 @@ class password:
         data_dict[self.website.upper()]['PASSWORD'] = password_text
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv(r'path\to\file')
+        password_data.to_csv("password_files/password_database.csv")
 
 
     # For renewing password
@@ -62,7 +57,7 @@ class password:
         global columns
 
         password_text = password.create_password(length)
-        password_database = pandas.read_csv(r'path\to\file', index_col=0).T
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
         data_dict = password_database.to_dict()
 
         data_dict[self.website.upper()] = dict()
@@ -71,23 +66,23 @@ class password:
         data_dict[self.website.upper()]['PASSWORD'] = password_text
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv(r'path\to\file')
+        password_data.to_csv("password_files/password_database.csv")
 
 
     def delete_password(self):
         global columns
 
-        password_database = pandas.read_csv(r'path\to\file', index_col=0).T
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
         data_dict = password_database.to_dict()
 
         del data_dict[self.website.upper()]
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv(r'path\to\file')
+        password_data.to_csv("password_files/password_database.csv")
 
 
     def open_file():
-        os.startfile(r'path\to\file')
+        os.startfile("password_files/password_database.csv")
 
 
 
@@ -99,7 +94,7 @@ class passwords:
     def write_passwords(*passwords):
         global columns
 
-        password_database = pandas.read_csv(r'path\to\file', index_col=0).T
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
         data_dict = password_database.to_dict()
 
         for password in passwords:
@@ -108,5 +103,5 @@ class passwords:
             data_dict[password[0].upper()]['PASSWORD'] = password[1]
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv(r'path\to\file')
+        password_data.to_csv("password_files/password_database.csv")
 
