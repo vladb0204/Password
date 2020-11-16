@@ -12,6 +12,11 @@ class password:
         self.website = website
 
 
+    # Needed to truncate code
+    def renew_databse(self, password_database, password_text):
+        pass
+
+
     # Basic length of password
     def create_password(self, length=30):
         letters = string.ascii_letters + string.digits + string.punctuation
@@ -135,9 +140,7 @@ class passwords:
                 string = string.split(' ')
                 database.append([string[0], string[1]])
 
-
         passwords.write_passwords(database)
-
 
 
     def write_passwords(passwords):
