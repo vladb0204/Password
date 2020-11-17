@@ -13,9 +13,20 @@ class password:
 
 
     # Needed to truncate code
-    def renew_databse(self, password_database, password_text):
-        pass
+    # param is needed to anylize, how many password the user will input.
+    # if param == 0, then the user will input 1 password
+    # if param == 1, then the user will input several passwords.
+    def renew_database(website, password_database, password_text):
+        global columns
+        
+        data_dict = password_database.to_dict()
 
+        data_dict[website.upper()] = dict()
+        data_dict[website.upper()]['WEBSITE'] = website.title()
+        data_dict[website.upper()]['PASSWORD'] = password_text
+
+        password_data = pandas.DataFrame(data=data_dict, index=columns).T
+        password_data.to_csv("password_files/password_database.csv")
 
     # Basic length of password
     def create_password(self, length=30):
@@ -30,15 +41,7 @@ class password:
 
         password_text = password.create_password(length)
         password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
-        data_dict = password_database.to_dict()
-
-        data_dict[self.website.upper()] = dict()
-
-        data_dict[self.website.upper()]['WEBSITE'] = self.website.title()
-        data_dict[self.website.upper()]['PASSWORD'] = password_text
-
-        password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv("password_files/password_database.csv")
+        password.renew_database(self.website, password_database, password_text)
 
 
     # If the password is already existing and you don't have it in the database
@@ -46,32 +49,8 @@ class password:
         global columns
 
         password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
-        data_dict = password_database.to_dict()
+        password.renew_database(self.website, password_database, password_text)
 
-        data_dict[self.website.upper()] = dict()
-
-        data_dict[self.website.upper()]['WEBSITE'] = self.website.title()
-        data_dict[self.website.upper()]['PASSWORD'] = password_text
-
-        password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv("password_files/password_database.csv")
-
-
-    # For renewing password
-    def write_new_password(self, length):
-        global columns
-
-        password_text = password.create_password(length)
-        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
-        data_dict = password_database.to_dict()
-
-        data_dict[self.website.upper()] = dict()
-
-        data_dict[self.website.upper()]['WEBSITE'] = self.website.title()
-        data_dict[self.website.upper()]['PASSWORD'] = password_text
-
-        password_data = pandas.DataFrame(data=data_dict, index=columns).T
-        password_data.to_csv("password_files/password_database.csv")
 
 
     def delete_password(self):
