@@ -13,12 +13,10 @@ class password:
 
 
     # Needed to truncate code
-    # param is needed to anylize, how many password the user will input.
-    # if param == 0, then the user will input 1 password
-    # if param == 1, then the user will input several passwords.
+
     def renew_database(website, password_database, password_text):
         global columns
-        
+
         data_dict = password_database.to_dict()
 
         data_dict[website.upper()] = dict()
