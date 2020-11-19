@@ -12,6 +12,13 @@ class password:
         self.website = website
 
 
+    def __repr__(self):
+        password_database = pandas.read_csv("password_files/password_database.csv", index_col=0).T
+
+        data_dict = password_database.to_dict()
+        return data_dict[self.website.upper()]['PASSWORD']
+
+
     # Needed to truncate code
 
     def renew_database(website, password_database, password_text):
@@ -25,6 +32,7 @@ class password:
 
         password_data = pandas.DataFrame(data=data_dict, index=columns).T
         password_data.to_csv("password_files/password_database.csv")
+        
 
     # Basic length of password
     def create_password(self, length=30):
